@@ -2,41 +2,29 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rxdart/rxdart.dart';
 
-class AuthService {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Firestore _db = Firestore.instance;
+UserCredential user;
+FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Stream<FirebaseUser> user;
-  Stream<Map<String, dynamic>> profile;
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
-  PublishSubject loading = PublishSubject();
-   
-  AuthService() {
-    user = _auth..
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-    profile = user.switchMap((FirebaseUser u) {
-      if(u != null) {
-        return _db.collection('users').document(u.uid).snapshots().map((snap) => snap.data)
-      }
-    });
-  }
+  // Create a new credential
+  final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+  );
 
-  Future<FirebaseUser> googleSignIn() async {
 
-  }
-
-  void updateUserData(FirebaseUser user) async {
-
-  
-  }
-
-  void signOut() {
-
-  }
+  // Once signed in, return the UserCredential
+  return await _auth.signInWithCredential(credential);
 }
 
-final AuthService authService = AuthService();
+Future<void> loggout() async {
+  await _auth.signOut();
+  print('Saiu');
+}
