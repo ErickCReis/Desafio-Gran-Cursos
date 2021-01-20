@@ -10,9 +10,8 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-      title: 'Startup Name Generator',            
+      title: 'Startup Name Generator',
       home: RandomWords(),
       theme: ThemeData(
         primaryColor: Colors.white,
@@ -21,6 +20,46 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class SavedSugestionsArgs {
+  final Set<WordPair> saved;
+  final TextStyle textStyle;
+
+  SavedSugestionsArgs(this.saved, this.textStyle);
+}
+
+class SavedSugestions extends StatelessWidget {
+  final SavedSugestionsArgs args;
+
+  SavedSugestions({Key key, @required this.args}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    {
+      final tiles = args.saved.map(
+        (WordPair pair) {
+          return ListTile(
+            title: Text(
+              pair.asPascalCase,
+              style: args.textStyle,
+            ),
+          );
+        },
+      );
+
+      final divided = ListTile.divideTiles(
+        context: context,
+        tiles: tiles,
+      ).toList();
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Saved Suggestions'),
+        ),
+        body: ListView(children: divided),
+      );
+    }
+  }
+}
 
 class RandomWords extends StatefulWidget {
   @override
@@ -33,47 +72,26 @@ class _RandomWordsState extends State<RandomWords> {
   final _biggerFont = TextStyle(fontSize: 18.0);
 
   void _pushSaved() {
+    final SavedSugestionsArgs args = SavedSugestionsArgs(_saved, _biggerFont);
+
     Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          final tiles = _saved.map(
-            (WordPair pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                ),
-              );
-            },
-          );
-          final divided = ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList();
-
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved Suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
-        },
-      ),
+          builder: (context) => SavedSugestions(args: args)),
     );
   }
 
   Widget _buildSuggestions() {
     return ListView.builder(
-      padding: EdgeInsets.all(16.0),
-      itemBuilder: /*1*/ (context, i) {
-        if (i.isOdd) return Divider(); /*2*/
+        padding: EdgeInsets.all(16.0),
+        itemBuilder: /*1*/ (context, i) {
+          if (i.isOdd) return Divider(); /*2*/
 
-        final index = i ~/ 2; /*3*/
-        if (index >= _suggestions.length) {
-          _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-        }
-        return _buildRow(_suggestions[index]);
-    });
+          final index = i ~/ 2; /*3*/
+          if (index >= _suggestions.length) {
+            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+          }
+          return _buildRow(_suggestions[index]);
+        });
   }
 
   Widget _buildRow(WordPair pair) {
@@ -91,11 +109,11 @@ class _RandomWordsState extends State<RandomWords> {
         setState(() {
           if (alreadySaved) {
             _saved.remove(pair);
-          } else { 
-            _saved.add(pair); 
-          } 
+          } else {
+            _saved.add(pair);
+          }
         });
-      },  
+      },
     );
   }
 
