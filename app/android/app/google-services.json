@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "237036670380",
+    "project_id": "desafio-gran-cursos",
+    "storage_bucket": "desafio-gran-cursos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237036670380:android:89a09e962e966af7017e09",
+        "android_client_info": {
+          "package_name": "com.reis.desafiogran"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237036670380-h8pv5jg59mmikn85di2u20315601c84e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reis.desafiogran",
+            "certificate_hash": "dcc39ac9c321838f58ab9334cf2cd13703c4486f"
+          }
+        },
+        {
+          "client_id": "237036670380-ecrmkpfcco97kp15pi8curu6mmhrcdmh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBItjBg4-LdlfcZRgvmwD0BIYcL7H815_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237036670380-ecrmkpfcco97kp15pi8curu6mmhrcdmh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
