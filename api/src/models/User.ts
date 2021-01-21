@@ -1,11 +1,11 @@
 class User {
-  id: string;
+  uid: string;
 
-  name: string;
+  displayName: string;
 
   email: string;
 
-  avatar: string;
+  photoURL: string;
 }
 
 export default User;

@@ -5,6 +5,8 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 
+import './config/firebase';
+
 import routes from './routes';
 import ErrorHandler from './errors/ErrorHandler';
 

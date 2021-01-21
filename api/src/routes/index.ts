@@ -1,9 +1,13 @@
 import { Router } from 'express';
 
-import sessionsRouter from './sessions.routes';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import eventsRouter from './events.routes';
+import newsRouter from './news.routes';
 
 const routes = Router();
 
-routes.use('/sessions', sessionsRouter);
+routes.use('/news', newsRouter);
+
+routes.use('/events', ensureAuthenticated, eventsRouter);
 
 export default routes;

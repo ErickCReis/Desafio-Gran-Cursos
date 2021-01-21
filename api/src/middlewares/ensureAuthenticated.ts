@@ -1,19 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { verify } from 'jsonwebtoken';
 
+import { auth } from '../config/firebase';
 import AppError from '../errors/AppError';
 
-interface TokenPayload {
-  iat: number;
-  exp: number;
-  sub: string;
-}
-
-export default function ensureAuthenticated(
+export default async function ensureAuthenticated(
   request: Request,
   _: Response,
   next: NextFunction,
-): void {
+): Promise<void> {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
@@ -28,17 +22,14 @@ export default function ensureAuthenticated(
     throw new Error();
   }
 
-  try {
-    const decoded = verify(token, secret);
+  const isValid = await auth.verifyIdToken(token);
 
-    const { sub } = decoded as TokenPayload;
-
+  if (isValid) {
     request.user = {
-      id: sub,
+      id: isValid.uid,
     };
 
     return next();
-  } catch {
-    throw new AppError('Invalid JWT token', 401);
   }
+  throw new AppError('Invalid JWT token', 401);
 }
