@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
-import 'package:app/pages/sign_in_page.dart';
-import 'package:app/pages/profile_page.dart';
+import 'package:app/ui/sign_in_page.dart';
+import 'package:app/ui/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -66,7 +66,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
 class AuthenticationWrapper extends StatelessWidget {
   @override
