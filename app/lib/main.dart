@@ -3,9 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
-import 'package:app/authentication_service.dart';
-import 'package:app/sign_in_page.dart';
-import 'package:app/home_page.dart';
+import 'package:app/services/authentication_service.dart';
+import 'package:app/pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,8 +25,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Startup Name Generator',
-        home: AuthenticationWrapper(),
+        home: HomePage(),
         theme: ThemeData(
           primaryColor: Colors.red,
         ),
@@ -36,15 +34,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AuthenticationWrapper extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
-
-    if (firebaseUser != null) {
-      return HomePage();
-    }
-
-    return SignInPage();
-  }
-}
