@@ -7,7 +7,8 @@ import 'package:app/authentication_service.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userName = context.watch<User>().displayName;
+    final user = context.watch<User>();
+    final userName = user.displayName != null ? user.displayName : "!"; 
 
     return Scaffold(
       body: Center(
