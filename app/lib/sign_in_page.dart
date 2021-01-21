@@ -40,6 +40,12 @@ class SignInPage extends StatelessWidget {
             },
             child: Text("Sign in Google"),
           ),
+          RaisedButton(
+            onPressed: () {
+              context.read<AuthenticationService>().signInWithFacebook();
+            },
+            child: Text("Sign in Facebook"),
+          ),
         ],
       ),
     );
