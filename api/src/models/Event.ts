@@ -1,4 +1,4 @@
-class News {
+class Event {
   id: number;
 
   title: string;
@@ -10,4 +10,4 @@ class News {
   image_url: string;
 }
 
-export default News;
+export default Event;

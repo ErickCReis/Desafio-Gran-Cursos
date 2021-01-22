@@ -1,6 +1,7 @@
 import { firestore } from 'firebase-admin';
 
 import News from '../models/News';
+import Event from '../models/Event';
 
 const converter = <T>() => ({
   toFirestore: (data: Partial<T>) => data,

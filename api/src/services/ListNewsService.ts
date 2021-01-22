@@ -1,5 +1,6 @@
-import News from '../models/News';
 import db from '../utils/db';
+
+import News from '../models/News';
 
 class ListNewsService {
   public async execute(): Promise<News[]> {

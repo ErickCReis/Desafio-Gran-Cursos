@@ -16,14 +16,23 @@ export default async function ensureAuthenticated(
 
   const [, token] = authHeader.split(' ');
 
-  const isValid = await auth.verifyIdToken(token);
-
-  if (isValid) {
-    request.user = {
-      id: isValid.uid,
-    };
-
-    return next();
+  if (token === 'null') {
+    throw new AppError('Invalid JWT token', 401);
   }
-  throw new AppError('Invalid JWT token', 401);
+
+  try {
+    const isValid = await auth.verifyIdToken(token);
+
+    if (isValid) {
+      request.user = {
+        id: isValid.uid,
+      };
+
+      return next();
+    }
+
+    throw new AppError('Invalid JWT token', 401);
+  } catch (err) {
+    throw new Error(err.message);
+  }
 }
