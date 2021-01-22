@@ -1,3 +1,5 @@
+import { firestore } from 'firebase-admin';
+
 class Event {
   id: number;
 
@@ -5,7 +7,7 @@ class Event {
 
   local: string;
 
-  date: string;
+  date: Date | firestore.Timestamp;
 
   image_url: string;
 }
