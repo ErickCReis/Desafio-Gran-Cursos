@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:app/data/secure_storage.dart';
+import 'package:app/entities/Event.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
@@ -11,8 +12,7 @@ Future<dynamic> listEventsService() async {
       .get('$SERVER_IP/events', headers: {"Authorization": 'Bearer $jwt'});
 
   if (response.statusCode == 200) {
-    final events = json.decode(response.body);
-    return events;
+    return _parseEvents(response.body);
   }
 
   if (response.statusCode == 401) {
@@ -24,4 +24,10 @@ Future<dynamic> listEventsService() async {
   }
 
   return 'Internal Error';
+}
+
+List<Event> _parseEvents(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Event>((json) => Event.fromJson(json)).toList();
 }
