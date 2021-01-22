@@ -29,13 +29,13 @@ class _NewsListState extends State<NewsList> {
     });
   }
 
-  Widget _eventCard(int index) {
+  Widget _newsCard(News _news) {
     return SizedBox(
       height: 250,
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Stack(fit: StackFit.passthrough, children: [
-          Image.network(news[index].imageUrl, fit: BoxFit.fill),
+          Image.network(_news.imageUrl, fit: BoxFit.fill),
           Container(color: Colors.black54),
           Padding(
             padding: EdgeInsets.all(10.0),
@@ -44,11 +44,11 @@ class _NewsListState extends State<NewsList> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  news[index].title,
+                  _news.title,
                   style: titleTextStyle,
                 ),
                 Text(
-                  news[index].content,
+                  _news.content,
                   style: contentTextStyle,
                   textAlign: TextAlign.justify,
                 ),
@@ -65,11 +65,11 @@ class _NewsListState extends State<NewsList> {
     );
   }
 
-  Widget _eventList() {
+  Widget _newsList(List<News> _newsList) {
     return ListView.builder(
       itemCount: news.length,
       itemBuilder: (context, index) {
-        return _eventCard(index);
+        return _newsCard(_newsList[index]);
       },
     );
   }
@@ -78,8 +78,8 @@ class _NewsListState extends State<NewsList> {
     return news == null
         ? CircularProgressIndicator()
         : (news is List<News> && news.isNotEmpty)
-            ? _eventList()
-            : Text("Nenhuma notícia encontrado");
+            ? _newsList(news)
+            : Text("Nenhuma notícia encontrada");
   }
 
   @override
