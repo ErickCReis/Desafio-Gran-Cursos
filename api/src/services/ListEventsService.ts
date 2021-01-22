@@ -1,9 +1,11 @@
-import User from '../models/User';
+import db from '../utils/db';
 
 class ListEventsService {
-  public async execute(): Promise<User> {
-    const user = new User();
-    return user;
+  public async execute(): Promise<Event[]> {
+    const eventsDocs = await db.events.get();
+
+    const events = eventsDocs.docs.map(doc => doc.data());
+    return events;
   }
 }
 

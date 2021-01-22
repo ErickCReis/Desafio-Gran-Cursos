@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { auth } from '../config/firebase';
+import auth from '../config/firebase';
 import AppError from '../errors/AppError';
 
 export default async function ensureAuthenticated(
@@ -15,12 +15,6 @@ export default async function ensureAuthenticated(
   }
 
   const [, token] = authHeader.split(' ');
-
-  const secret = process.env.JWT_SECRET;
-
-  if (!secret) {
-    throw new Error();
-  }
 
   const isValid = await auth.verifyIdToken(token);
 
