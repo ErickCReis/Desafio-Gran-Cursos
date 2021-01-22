@@ -11,6 +11,11 @@ class NewsList extends StatefulWidget {
 class _NewsListState extends State<NewsList> {
   dynamic news;
 
+  final titleTextStyle =
+      TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold);
+
+  final contentTextStyle = TextStyle(color: Colors.white);
+
   @override
   void initState() {
     super.initState();
@@ -24,14 +29,47 @@ class _NewsListState extends State<NewsList> {
     });
   }
 
+  Widget _eventCard(int index) {
+    return SizedBox(
+      height: 250,
+      child: Card(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Stack(fit: StackFit.passthrough, children: [
+          Image.network(news[index].imageUrl, fit: BoxFit.fill),
+          Container(color: Colors.black54),
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  news[index].title,
+                  style: titleTextStyle,
+                ),
+                Text(
+                  news[index].content,
+                  style: contentTextStyle,
+                  textAlign: TextAlign.justify,
+                ),
+              ],
+            ),
+          ),
+        ]),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 5,
+        margin: EdgeInsets.all(10),
+      ),
+    );
+  }
+
   Widget _eventList() {
     return ListView.builder(
       itemCount: news.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(news[index].title),
-          subtitle: Text(news[index].content),
-        );
+        return _eventCard(index);
       },
     );
   }

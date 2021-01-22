@@ -11,7 +11,7 @@ class News {
       id: json['id'] as int,
       title: json['title'] ?? '',
       content: json['content'] ?? '',
-      imageUrl: json['image_url'] ?? '',
+      imageUrl: "${json['image_url']}${json['id']}" ?? '',
     );
   }
 }
