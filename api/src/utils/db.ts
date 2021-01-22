@@ -10,7 +10,10 @@ const converter = <T>() => ({
 });
 
 const dataPoint = <T>(collectionPath: string) =>
-  firestore().collection(collectionPath).withConverter(converter<T>());
+  firestore()
+    .collection(collectionPath)
+    .orderBy('id', 'desc')
+    .withConverter(converter<T>());
 
 const db = {
   news: dataPoint<News>('news'),
