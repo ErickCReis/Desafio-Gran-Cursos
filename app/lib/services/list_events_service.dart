@@ -8,8 +8,6 @@ import '../constants.dart';
 Future<dynamic> listEventsService() async {
   final jwt = await secureStorage.readSecureData('jwt');
 
-  print(jwt);
-
   final response = await http
       .get('$SERVER_IP/events', headers: {"Authorization": 'Bearer $jwt'});
 

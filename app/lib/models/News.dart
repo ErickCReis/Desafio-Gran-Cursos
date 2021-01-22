@@ -9,9 +9,9 @@ class News {
   factory News.fromJson(Map<String, dynamic> json) {
     return News(
       id: json['id'] as int,
-      title: json['title'] as String,
-      content: json['content'] as String,
-      imageUrl: json['image_url'] as String,
+      title: json['title'] ?? '',
+      content: json['content'] ?? '',
+      imageUrl: json['image_url'] ?? '',
     );
   }
 }

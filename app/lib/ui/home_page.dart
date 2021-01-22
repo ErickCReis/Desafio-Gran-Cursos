@@ -1,3 +1,4 @@
+import 'package:app/ui/event_list.dart';
 import 'package:app/ui/news_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,9 +6,6 @@ import 'package:provider/provider.dart';
 
 import 'package:app/ui/sign_in_page.dart';
 import 'package:app/ui/profile_page.dart';
-
-import 'package:app/services/list_events_service.dart';
-import 'package:app/services/list_news_service.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -36,45 +34,34 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _widgetOptions = <Widget>[
     NewsList(),
-    Container(
-      child: FutureBuilder(
-          future: listEventsService(),
-          builder: (context, snapshot) => snapshot.hasData
-              ? Column(
-                  children: <Widget>[
-                    Text("Here's the data:"),
-                    Text(snapshot.data.toString())
-                  ],
-                )
-              : snapshot.hasError
-                  ? Text("An error occurred")
-                  : CircularProgressIndicator()),
-    ),
+    EventsList(),
     AuthenticationWrapper(),
   ];
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index, bool isLogged) {
     setState(() {
-      _selectedIndex = index;
+      if (!isLogged && index == 1) {
+        _selectedIndex = 2;
+      } else
+        _selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
+    final isLogged = firebaseUser != null;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Desafio Gran Cursos'),
       ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: Center(child: _widgetOptions[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
-        items: firebaseUser != null ? _navigationBarItems : _navigationBarItems,
+        items: _navigationBarItems,
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.red,
-        onTap: _onItemTapped,
+        onTap: (index) => _onItemTapped(index, isLogged),
       ),
     );
   }
@@ -84,11 +71,8 @@ class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
+    final isLogged = firebaseUser != null;
 
-    if (firebaseUser != null) {
-      return ProfilePage();
-    }
-
-    return SignInPage();
+    return isLogged ? ProfilePage() : SignInPage();
   }
 }

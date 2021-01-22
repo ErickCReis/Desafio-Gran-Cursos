@@ -8,7 +8,7 @@ class NewsList extends StatefulWidget {
 }
 
 class _NewsListState extends State<NewsList> {
-  List<News> news;
+  dynamic news;
 
   @override
   void initState() {
@@ -16,28 +16,35 @@ class _NewsListState extends State<NewsList> {
     _pullRefresh();
   }
 
-  Future<void> _pullRefresh() async {
+  Future _pullRefresh() async {
     final newsData = await listNewsService();
     setState(() {
-      news = newsData as List<News>;
+      news = newsData;
     });
+  }
+
+  Widget _eventList() {
+    return ListView.builder(
+      itemCount: news.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(news[index].title),
+          subtitle: Text(news[index].content),
+        );
+      },
+    );
+  }
+
+  Widget _verifyResponse() {
+    return news == null
+        ? CircularProgressIndicator()
+        : (news is List<News> && news.isNotEmpty)
+            ? _eventList()
+            : Text("Nenhuma notícia encontrado");
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _pullRefresh,
-      child: news == null
-          ? CircularProgressIndicator()
-          : ListView.builder(
-              itemCount: news.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(news[index].title),
-                  subtitle: Text(news[index].content),
-                );
-              },
-            ),
-    );
+    return RefreshIndicator(onRefresh: _pullRefresh, child: _verifyResponse());
   }
 }
