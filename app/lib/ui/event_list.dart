@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/models/Event.dart';
+import 'package:app/entities/Event.dart';
 import 'package:app/services/list_events_service.dart';
 
 class EventsList extends StatefulWidget {

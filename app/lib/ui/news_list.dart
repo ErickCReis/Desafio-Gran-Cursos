@@ -1,6 +1,7 @@
-import 'package:app/models/News.dart';
-import 'package:app/services/list_news_service.dart';
 import 'package:flutter/material.dart';
+
+import 'package:app/entities/News.dart';
+import 'package:app/services/list_news_service.dart';
 
 class NewsList extends StatefulWidget {
   @override

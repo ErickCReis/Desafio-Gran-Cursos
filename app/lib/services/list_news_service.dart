@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
-import 'package:app/models/News.dart';
+import 'package:app/entities/News.dart';
 
 import '../constants.dart';
 

@@ -1,9 +1,9 @@
-import 'package:app/ui/event_list.dart';
-import 'package:app/ui/news_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
+import 'package:app/ui/news_list.dart';
+import 'package:app/ui/event_list.dart';
 import 'package:app/ui/sign_in_page.dart';
 import 'package:app/ui/profile_page.dart';
 
