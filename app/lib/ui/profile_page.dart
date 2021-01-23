@@ -11,8 +11,6 @@ class ProfilePage extends StatelessWidget {
     final hasUser = user.displayName != null;
     final userName = hasUser ? user.displayName : "";
 
-    print(user);
-
     return Stack(
       fit: StackFit.expand,
       children: [
