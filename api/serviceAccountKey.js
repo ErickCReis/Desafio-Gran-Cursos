@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   type: 'service_account',
   project_id: 'desafio-gran-cursos',
   private_key_id: '8ede7178b980b978d79e40a8fea44511f7adf5b8',
