@@ -8,23 +8,54 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<User>();
-    final userName = user.displayName != null ? user.displayName : "";
+    final hasUser = user.displayName != null;
+    final userName = hasUser ? user.displayName : "";
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    print(user);
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.red, Colors.white])),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text("Bem vindo " + userName),
+            Text(
+              "Bem vindo $userName !",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            CircleAvatar(
+              backgroundImage: NetworkImage(user.photoURL),
+              radius: 100,
+            ),
             RaisedButton(
-              onPressed: () {
-                context.read<AuthenticationService>().signOut();
+              color: Colors.red,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              onPressed: () async {
+                await context.read<AuthenticationService>().signOut();
               },
-              child: Text("Sair"),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 100),
+                child: Text("Sair",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
+              ),
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 }
