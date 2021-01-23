@@ -3,8 +3,7 @@ module.exports = {
   project_id: 'desafio-gran-cursos',
   private_key_id: '8ede7178b980b978d79e40a8fea44511f7adf5b8',
   private_key: process.env.FIREBASE_PRIVATE_KEY,
-  client_email:
-    'firebase-adminsdk-b0igh@desafio-gran-cursos.iam.gserviceaccount.com',
+  client_email: process.env.FIREBASE_CLIENT_EMAIL,
   client_id: '113037235427537725544',
   auth_uri: 'https://accounts.google.com/o/oauth2/auth',
   token_uri: 'https://oauth2.googleapis.com/token',
